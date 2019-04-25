@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>登录生鲜加工|订货系统|分销订货|-生鲜加工｜移动订货系统第１品牌</title>
+    <meta name="keywords" content="生鲜加工配送官网、生鲜加工配送APP、最好用的客户订货系统" />
+    <meta name="description" content="生鲜加工是一款面向企业的移动订货系统。是为供应商与它的销售商之间方便及时订货、发货而提供的；也可用于供应商与其内部各分子公司或直营店、稳定大客户的订货往来而使用。" />
+    <link rel="stylesheet" href="/static/js/portal/reset.css" />
+    <link rel="stylesheet" href="/static/js/portal/lib.css" />
+    <link rel="stylesheet" href="/static/js/portal/login.css" />
+</head>
+<body id="login" style="background-image: url(https://oss.dinghuo123.com/notify/images/0f8063c9-d8f9-4784-a951-bcdb553fd04d.png);center right no-repeat;">
+<div class="header">
+    <div class="header-wrap">
+        <h1 class="header-logo"><a href="https://www.dinghuo123.com/">生鲜加工配送</a></h1>
+    </div>
+</div>
+<div class="container">
+    <div class="link-con">
+        <a id="loginLink" target="_blank" style="background: url(https://oss.dinghuo123.com/notify/images/6e7aaee6-82db-4ec7-afef-016268940e96.png) center right no-repeat;" href="https://www.dinghuo123.com/product/newDinghuo.html?utm_source=denglu&amp;utm_campaign=denglu&amp;utm_content=denglu&amp;utm_term=新产品推广"></a>
+    </div>
+    <div class="form-con">
+        <div class="my-form">
+            <div class="my-form-header">
+                <span class="my-form-header-login my-form-header-color">登录</span>
+                <span class="my-form-header-register"><a href="https://sso.dinghuo123.com/web/register">注册</a></span>
+            </div>
+            <form id="myForm" autocomplete="off">
+                <input style="display:none" type="text" name="fakeusernameremembered" />
+                <input style="display:none" type="password" name="fakepasswordremembered" />
+                <div class="control-box">
+                    <div class="warn" id="warn">
+
+                    </div>
+                    <div class="control-form">
+                        <input type="text" name="username" id="username" tabIndex="1" class="ui-input" placeholder="请输入手机号码/用户名" autocomplete="off" />
+                    </div>
+                    <div class="control-form">
+                        <input type="password" name="password" id="password" tabIndex="2" class="ui-input" placeholder="请输入密码" autocomplete="off" />
+                    </div>
+                    <div class="control-form" style="display:none;">
+                        <input style="display:none" name="login_error_count" class="login_error" value="" />
+                    </div>
+                    <div class="control-form dn">
+                        <input type="text" class="ui-input verifyCode" id="verifyCode" name="verifyCode" placeholder="请输入右侧图片" autocomplete="off" />
+                        <img src="" title="点击刷新图片" height="40" width="105" class="auth-image" />
+                    </div>
+
+
+                    <div class="control-form o-form">
+                        <label class="remember-name"><input type="checkbox" tabIndex="3" name="rememberName" value="1" /><span>记住用户名</span></label>
+                        <a class="forget-pwd" href="http://sso.dinghuo123.com/password/retrieve/page">忘记密码？</a>
+                    </div>
+                    <div class="control-form">
+                        <input type="button" id="loginBtn" class="ui-btn ui-btn-blue" tabIndex="4" value="登录" />
+                    </div>
+                </div>
+            </form>
+            <div class="down-con">
+                <a class="scan-a" href="https://open.work.weixin.qq.com/wwopen/sso/3rd_qrConnect?appid=wx828523135979d104&amp;redirect_uri=http://sso.dinghuo123.com/isv/qywexin/sso&amp;usertype=member"><em class="ui-icon-wx"></em><span class="scan-a-text">企业微信登录</span></a>
+                <a class="down-a" href="https://www.dinghuo123.com/product/dinghuo.html#download"><em class="ui-icon-phone"></em><span class="down-a-text">手机下载</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="service" value="" />
+<input type="hidden" name="relayState" value="" />
+<input type="hidden" name="identifyTag" value="" />
+<form id="loginForm" method="post" action="/login">
+    <input type="hidden" name="service" value="" />
+    <input type="hidden" name="relayState" value="" />
+    <input type="hidden" name="lt" class="authJWT" value="" />
+    <input type="hidden" name="identifyTagValue" class="identifyTagValue" value="" />
+</form>
+<input type="hidden" id="appUrl" value="https://sso.dinghuo123.com" />
+<input type="hidden" id="loginErrorCount" value="0" />
+<script type="text/javascript" src="/static/js/portal/jquery.js"></script>
+<script type="text/javascript" src="/static/js/portal/login-util.js?v=201903182004"></script>
+<script type="text/javascript" src="/static/js/portal/jquery.defaultvalue.js"></script>
+<script type="text/javascript" src="/static/js/portal/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/js/portal/icheck.js"></script>
+<script type="text/javascript" src="/static/js/portal/jquery.cookie.js"></script>
+<script type="text/javascript" src="/static/js/portal/growingio-pc.js"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var THISPAGE = {};
+    $(function () {
+        THISPAGE = {
+            init: function () {
+                this.errorTime = !!$("#loginErrorCount").val() ? parseInt($("#loginErrorCount").val()) : 0;
+                this.errorCookieKey = getCookie('authService_login_error_key');
+                this.addEvent();
+            },
+            addEvent: function () {
+                var _self = this;
+                $(window).on('resize', function () {
+                    var clientHeight = document.body.clientHeight;
+                    if (clientHeight < 800) {
+                        $("#loginLink").css({"backgroundSize": "70%"});
+                    } else {
+                        $("#loginLink").css({"backgroundSize": null});
+                    }
+                });
+                $(window).trigger('resize');
+                $(document).on('keyup', function (e) {
+                    e.preventDefault();
+                    if (e.keyCode === 13) {
+                        if (e.target.name === 'password' || e.target.name === 'verifyCode') {
+                            $("#loginBtn").trigger('click');
+                        } else {
+                            var tabIndex = e.target.tabIndex;
+                            tabIndex++;
+                            $("input[tabIndex=" + tabIndex + "]").focus();
+                        }
+                    }
+                });
+                //记住的用户名
+                var u = $.cookie("username");
+                if (u) {
+                    $("#username").val(u);
+                }
+                //动画
+                //$('.my-form').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                //	$('#loginLink').addClass('animated fadeInLeft');
+                //});
+                //记住用户名
+                $(".remember-name").iCheck({
+                    checkboxClass: 'icheck icheckbox_flat-blue'
+                });
+
+                //IE8
+                $(".ui-input").defaultValue();
+
+                //刷新验证码
+                $(".auth-image").click(function (e) {
+                    var identifyTag = $("input[ name=identifyTag]").val();
+                    $(this).attr('src', LOGIN.getVerifyCode(identifyTag));
+                });
+
+                if (_self.errorTime >= 3 || _self.errorCookieKey != null) {
+                    var $img = $(".auth-image");
+                    var identifyTag = $("input[ name=identifyTag]").val();
+                    $img.parents('.control-form').show();
+                    $img.attr('src', LOGIN.getVerifyCode(identifyTag));
+                }
+
+                $("#myForm").validate({
+                    onfocusin: function (element, event) {
+                        var e = $("#warn");
+                        e.html("");
+                    },
+                    onfocusout: function (element, event) {
+                        $(element).valid();
+                    },
+                    focusCleanup: true,
+                    success: "success",
+                    onkeyup: false,
+                    ignore: ":hidden",
+                    errorPlacement: function (label, element) {
+                        var e = $("#warn");
+                        e.append(label);
+                    },
+                    rules: {
+                        username: {
+                            required: true
+                        },
+                        password: {
+                            required: true
+                        },
+                        verifyCode: {
+                            required: true,
+                            maxlength: 4,
+                            minlength: 4
+                        }
+                    },
+                    messages: {
+                        username: {
+                            required: "登录用户名不能为空！"
+                        },
+                        password: {
+                            required: "登录密码不能为空！"
+                        },
+                        verifyCode: {
+                            required: "验证码不能为空！",
+                            maxlength: "图片识别码不正确！",
+                            minlength: "图片识别码不正确！"
+                        }
+                    }
+                });
+
+                $("#loginBtn").click(function (e) {
+                    var _this = $(this);
+                    e.preventDefault();
+                    $("#warn").html("");
+                    var formValid = $("#myForm").valid();
+                    $("#warn").find('.success').remove();
+                    if (formValid) {
+                        var postData = {
+                            service: $("input[name=service]").val(),
+                            relayState: $("input[name=relayState]").val(),
+                            username: $.trim($("input[name=username]").val()),
+                            password: $.trim($("input[name=password]").val()),
+                            login_error_count: $("input[name=login_error_count]").val(),
+                            identifyTag: $("input[name=identifyTag]").val()
+                        };
+                        if (_self.errorTime >= 3) {
+                            postData.verfCode = $.trim($("input[name=verifyCode]").val());
+                        }
+                        _this.attr("disabled", true).val("正在登录...");
+                        LOGIN.clearCrossDomainCookie();
+                        LOGIN.auth(postData, {
+                            success: function (r) {
+                                $("input[name=lt]").val(r);
+                                if ($("input[name=rememberName]").get(0).checked) {
+                                    $.cookie("username", postData.username, {
+                                        expires: 30,
+                                        path: '/',
+                                        domain: 'dinghuo123.com'
+                                    });
+                                }
+                                $(".authJWT").val(r);
+
+                                $("#loginForm").submit();
+                            },
+                            error: function (code, r) {
+                                var e = $("#warn");
+                                e.html("");
+                                e.append(r);
+                                _this.attr("disabled", null).val("登录");
+                                _self.errorTime++;
+                                $(".login_error").val(_self.errorTime);
+                                if (_self.errorTime >= 3 || cookie != null) {
+                                    var $img = $(".auth-image");
+                                    var identifyTag = $("input[ name=identifyTag]").val();
+                                    $img.parents('.control-form').show();
+                                    $img.attr('src', LOGIN.getVerifyCode(identifyTag));
+                                }
+                                if (_self.errorTime >= 5) {
+                                    $("#warn").html('').html('连续输错密码五次,请30分钟后再试!');
+                                    _this.attr("disabled", true).val("请30分钟后再试");
+                                }
+                                if (code === 'limit') {
+                                    _this.attr("disabled", true).val("请30分钟后再试");
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        };
+        THISPAGE.init();
+
+    })
+    function getCookie(sName)
+    {
+        var aCookie = document.cookie.split("; ");
+        for (var i=0; i < aCookie.length; i++)
+        {
+            var aCrumb = aCookie[i].split("=");
+            if (sName == aCrumb[0])
+                return unescape(aCrumb[1]);
+        }
+        return null;
+    }
+
+
+    /*]]>*/
+</script>
+</body>
+</html>
